@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="main_fontSize">22sp</dimen>
+    <dimen name="settings_fontSize">16sp</dimen>
+    <dimen name="icon_padding">8dp</dimen>
+    <dimen name="button_radius">16dp</dimen>
+    <dimen name="low_padding">4dp</dimen>
+    <dimen name="end_padding">52dp</dimen>
+</resources>
