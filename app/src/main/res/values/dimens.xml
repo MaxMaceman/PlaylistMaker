@@ -1,8 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="main_fontSize">22sp</dimen>
     <dimen name="settings_fontSize">16sp</dimen>
+    <dimen name="upHorizontal_padding">16dp</dimen>
     <dimen name="icon_padding">8dp</dimen>
-    <dimen name="button_radius">16dp</dimen>
+    <dimen name="mainPageButton_radius">16dp</dimen>
     <dimen name="low_padding">4dp</dimen>
-    <dimen name="end_padding">52dp</dimen>
+    <dimen name="end_padding">12dp</dimen>
+    <dimen name="toolbar_padding">12dp</dimen>
+    <dimen name="settingsVertical_padding">21dp</dimen>
 </resources>
