@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MainPageToolbar">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="titleMarginStart">@dimen/upHorizontal_padding</item>
+        <item name="titleMarginTop">14dp</item>
+        <item name="titleMarginBottom">@dimen/upHorizontal_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+
+    </style>
+
+    <style name="MainPageView">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="MainPageButton">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginHorizontal">@dimen/upHorizontal_padding</item>
+        <item name="android:layout_marginBottom">@dimen/upHorizontal_padding</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/icon_padding</item>
+        <item name="iconTint">@color/pm_black</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="cornerRadius">@dimen/mainPageButton_radius</item>
+
+    </style>
+
+    <style name="SettingsPageToolbar">
+
+        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
+        <item name="android:paddingBottom">@dimen/toolbar_padding</item>
+
+
+    </style>
+
+    <style name="SettingsPageView">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingVertical">@dimen/settingsVertical_padding</item>
+        <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
+        <item name="android:paddingEnd">@dimen/end_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:textSize">@dimen/settings_fontSize</item>
+        <item name="android:textFontWeight">400</item>
+
+    </style>
+</resources>
