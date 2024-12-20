@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/colorOnPrimary"
     android:orientation="vertical"
     tools:context=".SettingsActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/back"
-        app:navigationIcon="@drawable/return_light_mode"
         app:title="@string/settings"
         style="@style/SettingsPageToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp" />
+        />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/DayNightSwitcher"
-        style="@style/SettingsPageView"
-        android:paddingHorizontal="@dimen/upHorizontal_padding"
-        android:paddingEnd="@dimen/low_padding"
+        android:id="@+id/dayNightSwitcher"
+        style="@style/SettingsPageSwitcher"
         android:text="@string/dark_theme"
-        android:thumbTintMode="screen" />
+        />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/share"
         style="@style/SettingsPageView"
         android:text="@string/share"
         android:drawableEnd="@drawable/share_light_mode" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/support"
         style="@style/SettingsPageView"
         android:text="@string/support"
         android:drawableEnd="@drawable/support_light_mode" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/user_agreement"
         style="@style/SettingsPageView"
         android:text="@string/agreement"
         android:drawableEnd="@drawable/forward_light_mode" />
