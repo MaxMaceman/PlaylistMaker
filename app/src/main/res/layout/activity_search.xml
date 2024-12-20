@@ -18,13 +18,14 @@
 
     <FrameLayout
         android:id="@+id/input_container"
-        style="@style/SearchFrameTextEdit" >
+        style="@style/SearchFrameTextEdit"
+        >
 
         <EditText
             android:id="@+id/editTextFrame"
             style="@style/SearchPageTextEdit"
             android:inputType="text"
-            android:maxLength="30"
+            android:maxLength="99"
             android:maxLines="1"
              />
 

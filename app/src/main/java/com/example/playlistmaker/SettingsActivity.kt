@@ -24,14 +24,14 @@ class SettingsActivity : AppCompatActivity() {
 
         val return_button = findViewById<MaterialToolbar>(R.id.back)
 
-            return_button.setOnClickListener {
-                finish()
-            }
+        return_button.setOnClickListener {
+            finish()
+        }
 
         sharedPreferences = getPreferences(MODE_PRIVATE)
         themeSwitch = findViewById(R.id.dayNightSwitcher)
 
-        themeSwitch.isChecked = sharedPreferences.getBoolean("isDarkTheme", false)
+        themeSwitch.isChecked = sharedPreferences.getBoolean("isDarkTheme", true)
 
         themeSwitch.setOnCheckedChangeListener { _, isChacked ->
             if (isChacked) {
@@ -51,7 +51,7 @@ class SettingsActivity : AppCompatActivity() {
 
             share_button.setOnClickListener {
 
-                val shareText = "https://practicum.yandex.ru/profile/android-developer/"
+                val shareText = getString(R.string.share_link)
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, shareText)
@@ -60,17 +60,17 @@ class SettingsActivity : AppCompatActivity() {
 
                 val chooser = Intent.createChooser(sendIntent, "Поделиться с помощью:")
                 startActivity(chooser)
-        }
+            }
 
         val support_button = findViewById<MaterialTextView>(R.id.support)
 
         support_button.setOnClickListener {
-            val email = "maseman.sa@yandex.ru" // Убедитесь, что это правильный адрес
-            val subject = "Сообщение разработчикам и разработчицам приложения Playlist Maker"
-            val body = "Спасибо разработчикам и разработчицам за крутое приложение!"
+            val email = getString(R.string.support_message_email)
+            val subject = getString(R.string.support_message_subject)
+            val body = getString(R.string.support_message_body)
 
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:") // только для почты
+                data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
                 putExtra(Intent.EXTRA_SUBJECT, subject)
                 putExtra(Intent.EXTRA_TEXT, body)
@@ -80,7 +80,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val agreement_button = findViewById<MaterialTextView>(R.id.user_agreement)
             agreement_button.setOnClickListener {
-                val url = "https://yandex.ru/legal/practicum_offer/"
+                val url = getString(R.string.agreement_link)
                 val agreementIntent = Intent(Intent.ACTION_VIEW).apply {
                     data = Uri.parse(url)
                 }

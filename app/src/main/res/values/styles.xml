@@ -29,7 +29,7 @@
 
     </style>
 
-    <style name="MainPageButton">
+    <style name="MainPageButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
 
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -93,8 +93,7 @@
     <style name="SearchPageToolbar">
 
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:layout_height">56dp</item>
         <item name="android:textColor">@color/pm_black</item>
         <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
         <item name="android:paddingBottom">@dimen/toolbar_padding</item>
@@ -124,7 +123,6 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/text_gray</item>
         <item name="android:paddingHorizontal">@dimen/mainPageButton_radius</item>
-        <item name="cornerRadius">@dimen/mainPageButton_radius</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
         <item name="android:drawableStart">@drawable/search_light</item>
         <item name="android:drawablePadding">8dp</item>

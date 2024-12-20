@@ -8,6 +8,13 @@
         <item name="colorSecondary">@color/light_gray</item>
     </style>
 
+    <style name="Theme.Main.Page" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="colorPrimary">@color/pm_blue</item>
+        <item name="colorPrimaryVariant">@color/pm_black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/light_gray</item>
+    </style>
+
     <style name="Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorOnSecondary">@color/pm_blue</item>
     </style>
