@@ -133,13 +133,13 @@
     <style name="CloseButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="icon">@drawable/x_button_dark</item>
-        <item name="iconGravity">end</item>
-        <item name="iconTint">@color/pm_black</item>
-        <item name="iconSize">12dp</item>
         <item name="android:layout_gravity">end|center</item>
         <item name="android:backgroundTint">@color/white</item>
-        <item name="android:visibility">gone</item>
+        <item name="android:paddingEnd">@dime/settingsVertical_padding</item>
+        <item name="android:layout_marginVertical">10dp</item>
+        <item name="icon">@drawable/x_button</item>
+        <item name="iconGravity">end</item>
+        <item name="iconTint">@color/black</item>
 
     </style>
 </resources>
