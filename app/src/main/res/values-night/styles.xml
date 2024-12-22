@@ -53,11 +53,11 @@
 
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/toolbar_margin_buttom</item>
-        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
         <item name="android:paddingBottom">@dimen/toolbar_padding</item>
-        <item name="navigationIcon">@drawable/return_light_mode</item>
+        <item name="navigationIcon">@drawable/return_dark_mode</item>
         <item name="fontFamily">@font/ys_text_medium</item>
         <item name="android:textSize">@dimen/main_fontSize</item>
 
@@ -65,11 +65,11 @@
 
     <style name="SettingsPageSwitcher">
 
-        <item name="thumbTint">@color/light_gray</item>
-        <item name="trackTint">@color/text_gray</item>
+        <item name="thumbTint">@color/pm_blue</item>
+        <item name="trackTint">@color/light_blue</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/regular_fontSize</item>
         <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
         <item name="android:paddingBottom">@dimen/toolbar_padding</item>
@@ -84,19 +84,19 @@
         <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
         <item name="android:paddingEnd">@dimen/end_padding</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/regular_fontSize</item>
         <item name="android:textFontWeight">400</item>
 
     </style>
-    
+
     <style name="SearchPageToolbar">
 
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
-        <item name="android:textColor">@color/pm_black</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:paddingHorizontal">@dimen/upHorizontal_padding</item>
-        <item name="navigationIcon">@drawable/return_light_mode</item>
+        <item name="navigationIcon">@drawable/return_dark_mode</item>
         <item name="fontFamily">@font/ys_text_medium</item>
         <item name="android:textSize">@dimen/main_fontSize</item>
 
@@ -105,10 +105,10 @@
     <style name="SearchFrameTextEdit">
 
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/search_height</item>
+        <item name="android:layout_height">36dp</item>
         <item name="android:layout_marginHorizontal">@dimen/upHorizontal_padding</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">@dimen/toolbar_margin_buttom</item>
+        <item name="android:layout_marginBottom">24dp</item>
         <item name="android:orientation">horizontal</item>
 
     </style>
@@ -120,13 +120,13 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:hint">@string/search</item>
         <item name="android:textColor">@color/pm_black</item>
-        <item name="android:textColorHint">@color/text_gray</item>
+        <item name="android:textColorHint">@color/pm_black</item>
         <item name="android:paddingHorizontal">@dimen/toolbar_padding</item>
         <item name="android:textCursorDrawable">@drawable/cursor</item>
-        <item name="android:drawableStart">@drawable/search_page_icon</item>
+        <item name="android:drawableStart">@drawable/search_page_dark</item>
         <item name="android:drawablePadding">8dp</item>
         <item name="android:layout_marginVertical">@dimen/search_margin_vertical</item>
-        <item name="android:background">@drawable/rounded_textedit</item>
+        <item name="android:background">@drawable/rounded_textedit_dark</item>
 
     </style>
 
@@ -134,12 +134,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">end|center</item>
-        <item name="android:backgroundTint">@color/light_gray</item>
+        <item name="android:backgroundTint">@color/white</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:layout_marginVertical">@dimen/search_margin_vertical</item>
         <item name="icon">@drawable/x_button</item>
         <item name="iconGravity">end</item>
-        <item name="iconTint">@color/text_gray</item>
+        <item name="iconTint">@color/pm_black</item>
         <item name="android:visibility">gone</item>
 
     </style>

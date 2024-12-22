@@ -9,7 +9,4 @@
     <dimen name="end_padding">14dp</dimen>
     <dimen name="toolbar_padding">12dp</dimen>
     <dimen name="settingsVertical_padding">21dp</dimen>
-    <dimen name="toolbar_margin_buttom">24dp</dimen>
-    <dimen name="search_margin_vertical">10dp</dimen>
-    <dimen name="search_height">36dp</dimen>
 </resources>
