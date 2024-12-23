@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
@@ -23,15 +24,12 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         trackArtist.text = model.artistName
         trackDuration.text = model.trackTime
 
-        if (isInternetAvailable(context)) {
-            Glide.with(itemView)
-                .load(model.artworkUrl100)
-                .placeholder(R.drawable.stub_album)
-                .transform(CenterCrop(), RoundedCorners(2))
-                .into(albumImage)
-        } else {
-            albumImage.setImageResource(R.drawable.stub_album)
-        }
+        Glide.with(itemView)
+            .load(model.artworkUrl100)
+            .placeholder(R.drawable.stub_album)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .transform(CenterCrop(), RoundedCorners(2))
+            .into(albumImage)
     }
 
     private fun isInternetAvailable(context: Context): Boolean {
