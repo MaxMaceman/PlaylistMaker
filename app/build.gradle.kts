@@ -37,6 +37,10 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

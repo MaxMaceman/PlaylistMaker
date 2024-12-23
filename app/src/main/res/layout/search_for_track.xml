@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="61dp">
+
+    <ImageView
+        android:id="@+id/track_albumImage"
+        android:layout_width="@dimen/albumStub_layout"
+        android:layout_height="@dimen/albumStub_layout"
+        android:layout_marginVertical="@dimen/albumStub_margin"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="@dimen/albumStub_margin"
+        android:src="@drawable/stub_album"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/track_name"
+        style="@style/TrackName"
+        tools:text="text"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/track_marginEnd"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="44dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/track_artist"
+            style="@style/TrackInfo"
+            tools:text="text"
+            />
+
+        <ImageView
+            style="@style/DividingStyle"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/track_duration"
+            style="@style/TrackInfo"
+            android:layout_marginEnd="44dp"
+            tools:text="text"
+            />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TrackForward"
+        />
+
+
+
+</FrameLayout>
