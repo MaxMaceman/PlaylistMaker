@@ -25,6 +25,8 @@
         <EditText
             android:id="@+id/editTextFrame"
             style="@style/SearchPageTextEdit"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:inputType="text"
             android:maxLength="99"
             android:maxLines="1"
@@ -35,7 +37,53 @@
             style="@style/CloseButton" />
 
     </FrameLayout>
-    
+
+
+    <FrameLayout
+        android:id="@+id/splashscreenNothingFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="98dp"
+        android:visibility="gone"
+
+        >
+
+        <ImageView
+            style="@style/SplashscreenErrorIcon"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/SplashscreenNetworkErrorText"
+            android:text="@string/nothing_found"
+            />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/splashscreenNetworkError"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            style="@style/SplashscreenNetworkErrorIcon"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+        style="@style/SplashscreenNetworkErrorText"
+        android:text="@string/network_error"
+        />
+
+        <com.google.android.material.button.MaterialButton
+        android:id="@+id/splashscreenNothingBtn"
+        style="@style/SplashscreenNetworkErrorButton"
+        android:text="@string/update"
+        />
+
+    </FrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_tracksRecycle"
         android:layout_width="match_parent"
