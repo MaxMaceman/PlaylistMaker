@@ -56,7 +56,6 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchQuery = s.toString()
                 clearButton.isVisible = !s.isNullOrEmpty()
-                doSearch(searchQuery)
             }
 
             override fun afterTextChanged(s: Editable?) {}
