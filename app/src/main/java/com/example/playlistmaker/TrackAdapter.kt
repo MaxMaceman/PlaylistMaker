@@ -22,7 +22,7 @@ class TrackAdapter(
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(trackListResult[position], holder.itemView.context)
+        holder.bind(trackListResult.get(position), holder.itemView.context)
         holder.itemView.setOnClickListener { onSongClick(trackListResult[position]) }
     }
 
@@ -31,5 +31,17 @@ class TrackAdapter(
         trackListResult.clear()
         trackListResult.addAll(newTracks)
         notifyDataSetChanged()
+    }
+
+    fun addTrack(track: Track) {
+        trackListResult.add(track)
+        notifyItemInserted(trackListResult.size - 1)
+    }
+
+    fun removeTrack(position: Int) {
+        if (position >= 0 && position < trackListResult.size) {
+            trackListResult.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 }

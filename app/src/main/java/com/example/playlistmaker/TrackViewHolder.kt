@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val albumImage: ImageView = itemView.findViewById(R.id.track_albumImage)
@@ -22,7 +24,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(model: Track, context: Context) {
         trackName.text = model.trackName
         trackArtist.text = model.artistName
-        trackDuration.text = model.trackTime
+        trackDuration.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(293000L)
 
         Glide.with(itemView)
             .load(model.artworkUrl100)
