@@ -1,6 +1,5 @@
 package com.example.playlistmaker
 
-import SearchHistory
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
