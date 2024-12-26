@@ -35,14 +35,10 @@ class TrackAdapter(
         notifyDataSetChanged()
     }
 
-    // Обновленный метод добавления трека в начало списка
     fun addTrack(track: Track) {
-        // Убираем трек, если он уже существует
         trackListResult.removeIf { it.trackId == track.trackId }
-
-        // Добавляем трек в начало списка
         trackListResult.add(0, track)
-        notifyItemInserted(0) // Уведомляем о добавлении в начало
+        notifyItemInserted(0)
     }
 
     fun removeTrack(position: Int) {

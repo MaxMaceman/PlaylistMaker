@@ -42,33 +42,29 @@ class SearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_search)
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("search_prefs", MODE_PRIVATE)
-        searchHistory = SearchHistory(sharedPreferences)
-
         var historyView = findViewById<LinearLayout>(R.id.search_history)
         val returnButton = findViewById<MaterialToolbar>(R.id.searchToolbar)
+        searchHistory = SearchHistory(sharedPreferences)
         clearButton = findViewById(R.id.search_close_button)
         inputEditText = findViewById(R.id.editTextFrame)
         recyclerView = findViewById(R.id.search_tracksRecycle)
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
-
         recyclerView = findViewById(R.id.search_tracksRecycle)
         recyclerView.layoutManager = LinearLayoutManager(this)
         trackAdapter = TrackAdapter(tracksList) { track ->
             tracksList.addAll(searchHistory.getSearchHistory())
             searchHistory.addSong(track)
-            trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
-
         }
+
         recyclerView.adapter = trackAdapter
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
         historyRecyclerView.layoutManager = LinearLayoutManager(this)
-
         historyAdapter = TrackAdapter(historyList) { track ->
             doSearch(track.trackName)
         }
-        historyRecyclerView.adapter = historyAdapter
 
+        historyRecyclerView.adapter = historyAdapter
         returnButton.setOnClickListener {
             finish()
         }
@@ -76,11 +72,11 @@ class SearchActivity : AppCompatActivity() {
         searchQuery = savedInstanceState?.getString(SEARCH_QUERY_KEY, "") ?: ""
         inputEditText.setText(searchQuery)
         inputEditText.setOnFocusChangeListener { view, b -> displaySearchHistory() }
-
         inputEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 inputEditText.setOnFocusChangeListener { view, hasFocus ->
                     if (hasFocus && inputEditText.text.isEmpty()) {
+                        historyAdapter.notifyDataSetChanged()
                         displaySearchHistory()
                     }
                 }
@@ -94,7 +90,6 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-
             }
         })
 
@@ -104,6 +99,8 @@ class SearchActivity : AppCompatActivity() {
             searchQuery = ""
             tracksList.clear()
             trackAdapter.notifyDataSetChanged()
+            historyAdapter.notifyDataSetChanged()
+            displaySearchHistory()
             recyclerView.visibility = View.GONE
         }
 
@@ -169,6 +166,8 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.GONE
             findViewById<View>(R.id.splashscreenNothingFound).visibility = View.GONE
         }
+        trackAdapter.notifyDataSetChanged()
+        historyAdapter.notifyDataSetChanged()
     }
 
     private fun displaySearchHistory() {
