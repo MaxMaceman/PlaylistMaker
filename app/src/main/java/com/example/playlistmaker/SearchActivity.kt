@@ -50,18 +50,24 @@ class SearchActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.search_tracksRecycle)
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
         recyclerView = findViewById(R.id.search_tracksRecycle)
-        recyclerView.layoutManager = LinearLayoutManager(this)
         trackAdapter = TrackAdapter(tracksList) { track ->
-            tracksList.addAll(searchHistory.getSearchHistory())
             searchHistory.addSong(track)
+            tracksList.addAll(searchHistory.getSearchHistory())
+            trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
         }
-
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackAdapter
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
         historyRecyclerView.layoutManager = LinearLayoutManager(this)
         historyAdapter = TrackAdapter(historyList) { track ->
             doSearch(track.trackName)
+            if (historyList.contains(track)) {
+                historyList.remove(track)
+            }
+            historyList.add(0, track)
+            trackAdapter.notifyDataSetChanged()
+            historyAdapter.notifyDataSetChanged()
         }
 
         historyRecyclerView.adapter = historyAdapter
@@ -76,6 +82,7 @@ class SearchActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 inputEditText.setOnFocusChangeListener { view, hasFocus ->
                     if (hasFocus && inputEditText.text.isEmpty()) {
+                        trackAdapter.notifyDataSetChanged()
                         historyAdapter.notifyDataSetChanged()
                         displaySearchHistory()
                     }
@@ -98,10 +105,10 @@ class SearchActivity : AppCompatActivity() {
             clearButton.visibility = View.GONE
             searchQuery = ""
             tracksList.clear()
+            recyclerView.visibility = View.GONE
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
             displaySearchHistory()
-            recyclerView.visibility = View.GONE
         }
 
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -144,7 +151,6 @@ class SearchActivity : AppCompatActivity() {
                                 if (results.isNotEmpty()) {
                                     tracksList.addAll(results)
                                     trackAdapter.notifyDataSetChanged()
-                                    historyAdapter.notifyDataSetChanged()
                                     findViewById<View>(R.id.splashscreenNothingFound).visibility = View.GONE
                                     findViewById<View>(R.id.splashscreenNetworkError).visibility = View.GONE
                                     recyclerView.visibility = View.VISIBLE
@@ -166,8 +172,6 @@ class SearchActivity : AppCompatActivity() {
             recyclerView.visibility = View.GONE
             findViewById<View>(R.id.splashscreenNothingFound).visibility = View.GONE
         }
-        trackAdapter.notifyDataSetChanged()
-        historyAdapter.notifyDataSetChanged()
     }
 
     private fun displaySearchHistory() {
