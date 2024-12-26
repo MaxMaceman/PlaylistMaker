@@ -17,4 +17,5 @@
     <dimen name="trackInfo_fontSize">11sp</dimen>
     <dimen name="track_marginEnd">66dp</dimen>
     <dimen name="error_textSize">19sp</dimen>
+    <dimen name="clear_history">14sp</dimen>
 </resources>

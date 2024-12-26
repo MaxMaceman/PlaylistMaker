@@ -9,7 +9,7 @@ import com.example.playlistmaker.Track
 import com.example.playlistmaker.TrackViewHolder
 
 class TrackAdapter(
-    private var trackListResult: ArrayList<Track>,
+    private var trackListResult: MutableList<Track>,
     private val onSongClick: (Track) -> Unit
 ) : RecyclerView.Adapter<TrackViewHolder>() {
 
@@ -22,8 +22,10 @@ class TrackAdapter(
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(trackListResult.get(position), holder.itemView.context)
-        holder.itemView.setOnClickListener { onSongClick(trackListResult[position]) }
+        holder.bind(trackListResult[position], holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            onSongClick(trackListResult[position])
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -33,9 +35,14 @@ class TrackAdapter(
         notifyDataSetChanged()
     }
 
+    // Обновленный метод добавления трека в начало списка
     fun addTrack(track: Track) {
-        trackListResult.add(track)
-        notifyItemInserted(trackListResult.size - 1)
+        // Убираем трек, если он уже существует
+        trackListResult.removeIf { it.trackId == track.trackId }
+
+        // Добавляем трек в начало списка
+        trackListResult.add(0, track)
+        notifyItemInserted(0) // Уведомляем о добавлении в начало
     }
 
     fun removeTrack(position: Int) {
