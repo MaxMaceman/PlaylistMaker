@@ -89,7 +89,7 @@
     <LinearLayout
         android:id="@+id/search_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="@dimen/toolbar_margin_buttom"
         android:visibility="gone"
@@ -110,6 +110,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clear_history_button"
+            android:layout_height="wrap_content"
             style="@style/SplashscreenNetworkErrorButton"
             android:layout_marginVertical="@dimen/toolbar_margin_buttom"
             android:text="@string/history_clear_btn"

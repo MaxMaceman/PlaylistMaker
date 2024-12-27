@@ -106,6 +106,7 @@ class SearchActivity : AppCompatActivity() {
             searchQuery = ""
             tracksList.clear()
             recyclerView.visibility = View.GONE
+            hideKeyboard()
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
             displaySearchHistory()
