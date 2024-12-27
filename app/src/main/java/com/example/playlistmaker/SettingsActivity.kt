@@ -28,23 +28,20 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-        sharedPreferences = getPreferences(MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("APP_PREFERENCES", MODE_PRIVATE)
         themeSwitch = findViewById(R.id.dayNightSwitcher)
-
-        themeSwitch.isChecked = sharedPreferences.getBoolean("isDarkTheme", true)
-
-        themeSwitch.setOnCheckedChangeListener { _, isChacked ->
-            if (isChacked) {
+        themeSwitch.isChecked = sharedPreferences.getBoolean("isDarkTheme", false)
+        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
 
             with(sharedPreferences.edit()) {
-                putBoolean("isDarkTheme", isChacked)
+                putBoolean("isDarkTheme", isChecked)
                 apply()
             }
-
         }
 
         val share_button = findViewById<MaterialTextView>(R.id.share)
@@ -68,7 +65,6 @@ class SettingsActivity : AppCompatActivity() {
             val email = getString(R.string.support_message_email)
             val subject = getString(R.string.support_message_subject)
             val body = getString(R.string.support_message_body)
-
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
