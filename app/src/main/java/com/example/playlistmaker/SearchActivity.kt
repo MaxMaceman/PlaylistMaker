@@ -61,7 +61,6 @@ class SearchActivity : AppCompatActivity() {
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
         historyRecyclerView.layoutManager = LinearLayoutManager(this)
         historyAdapter = TrackAdapter(historyList) { track ->
-            doSearch(track.trackName)
             if (historyList.contains(track)) {
                 historyList.remove(track)
             }
@@ -104,9 +103,9 @@ class SearchActivity : AppCompatActivity() {
             inputEditText.text.clear()
             clearButton.visibility = View.GONE
             searchQuery = ""
-            tracksList.clear()
             recyclerView.visibility = View.GONE
             hideKeyboard()
+            tracksList.clear()
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
             displaySearchHistory()
