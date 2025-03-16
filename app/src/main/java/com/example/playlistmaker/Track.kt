@@ -5,7 +5,7 @@ data class Track (
     val trackName: String,
     val artistName: String,
     val collectionName: String,
-    val releaseDate: Int,
+    val releaseDate: String,
     val primaryGenreName: String,
     val country: String,
     val trackTimeMillis: Long,

@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 
+const val ADD_TRACK_KEY = "switch_track"
+
 class App : Application() {
     private var darkTheme: Boolean = false
     private val sharedPreferences: SharedPreferences by lazy {
@@ -24,7 +26,7 @@ class App : Application() {
         }
     }
 
-    private fun applyTheme() {
+    fun applyTheme() {
         val isDarkTheme = getCurrentTheme()
         switchTheme(isDarkTheme)
     }

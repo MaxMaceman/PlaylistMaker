@@ -217,8 +217,23 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="PlaylistToolbar">
+        <item name="navigationIcon">@drawable/return_light_mode</item>
+    </style>
+    
+    <style name="PlaylistPlayBtn">
+        <item name="android:src">@drawable/play_btn_light</item>
+    </style>
+
+    <style name="PlaylistLikeBtn">
+        <item name="android:src">@drawable/like_btn_light</item>
+    </style>
+
+    <style name="PlaylistCollectBtn">
+        <item name="android:src">@drawable/create_playlist_btn_light</item>
+    </style>
+
     <style name="PlaylistArtist">
-        <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">@dimen/clear_history</item>
         <item name="android:textColor">@color/pm_black</item>
@@ -227,7 +242,6 @@
     </style>
 
     <style name="PlaylistTrack">
-        <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">@dimen/main_fontSize</item>
         <item name="android:textColor">@color/pm_black</item>
@@ -238,7 +252,6 @@
     <style name="PlaylistDetailValue">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/pm_black</item>
@@ -250,11 +263,11 @@
     <style name="PlaylistDetailKey">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">32dp</item>
-        <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/text_gray</item>
+        <item name="android:paddingVertical">8dp</item>
     </style>
 
 </resources>
