@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -11,10 +12,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.gson.Gson
 import com.practicum.playlistmaker.TrackAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,9 +40,17 @@ class SearchActivity : AppCompatActivity() {
         fun onTrackClick(track: Track)
     }
 
+    private fun openPlayer(track: Track) {
+        val intent = Intent(this, PlayerActivity::class.java).apply {
+            putExtra(ADD_TRACK_KEY, Gson().toJson(track))
+        }
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("search_prefs", MODE_PRIVATE)
         var historyView = findViewById<LinearLayout>(R.id.search_history)
@@ -55,6 +66,7 @@ class SearchActivity : AppCompatActivity() {
             tracksList.addAll(searchHistory.getSearchHistory())
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
+            openPlayer(track)
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackAdapter
@@ -67,6 +79,7 @@ class SearchActivity : AppCompatActivity() {
             historyList.add(0, track)
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
+            openPlayer(track)
         }
 
         historyRecyclerView.adapter = historyAdapter
@@ -96,6 +109,15 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    searchQuery = ""
+                    recyclerView.visibility = View.GONE
+                    tracksList.clear()
+                    trackAdapter.notifyDataSetChanged()
+                    findViewById<View>(R.id.splashscreenNothingFound).visibility = View.GONE
+                    findViewById<View>(R.id.splashscreenNetworkError).visibility = View.GONE
+                    displaySearchHistory()
+                }
             }
         })
 
@@ -108,6 +130,7 @@ class SearchActivity : AppCompatActivity() {
             tracksList.clear()
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
+
             displaySearchHistory()
         }
 
