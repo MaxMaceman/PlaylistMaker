@@ -22,7 +22,9 @@ class App : Application() {
         return if (sharedPreferences.contains(IS_DARK)) {
             sharedPreferences.getBoolean(IS_DARK, darkTheme)
         } else {
-            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            val isSystemDark = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+            sharedPreferences.edit().putBoolean(IS_DARK, isSystemDark).apply()
+            isSystemDark
         }
     }
 

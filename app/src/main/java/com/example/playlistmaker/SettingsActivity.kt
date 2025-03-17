@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences("APP_PREFERENCES", MODE_PRIVATE)
         themeSwitch = findViewById(R.id.dayNightSwitcher)
-        themeSwitch.isChecked = sharedPreferences.getBoolean("isDarkTheme", false)
+        themeSwitch.isChecked = (application as App).getCurrentTheme()
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             (application as App).switchTheme(isChecked)
             with(sharedPreferences.edit()) {

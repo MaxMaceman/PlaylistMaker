@@ -62,11 +62,11 @@ class SearchActivity : AppCompatActivity() {
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
         recyclerView = findViewById(R.id.search_tracksRecycle)
         trackAdapter = TrackAdapter(tracksList) { track ->
-            openPlayer(track)
             searchHistory.addSong(track)
             tracksList.addAll(searchHistory.getSearchHistory())
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
+            openPlayer(track)
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackAdapter
@@ -75,11 +75,11 @@ class SearchActivity : AppCompatActivity() {
         historyAdapter = TrackAdapter(historyList) { track ->
             if (historyList.contains(track)) {
                 historyList.remove(track)
-                openPlayer(track)
             }
             historyList.add(0, track)
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
+            openPlayer(track)
         }
 
         historyRecyclerView.adapter = historyAdapter
@@ -109,6 +109,15 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    searchQuery = ""
+                    recyclerView.visibility = View.GONE
+                    tracksList.clear()
+                    trackAdapter.notifyDataSetChanged()
+                    findViewById<View>(R.id.splashscreenNothingFound).visibility = View.GONE
+                    findViewById<View>(R.id.splashscreenNetworkError).visibility = View.GONE
+                    displaySearchHistory()
+                }
             }
         })
 
@@ -121,6 +130,7 @@ class SearchActivity : AppCompatActivity() {
             tracksList.clear()
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
+
             displaySearchHistory()
         }
 
