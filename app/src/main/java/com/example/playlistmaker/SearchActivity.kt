@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -11,17 +13,18 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.practicum.playlistmaker.TrackAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var clearButton: MaterialButton
@@ -30,44 +33,65 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var historyRecyclerView: RecyclerView
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var progressBar: ProgressBar
+
     private val tracksList = mutableListOf<Track>()
     private val historyList = mutableListOf<Track>()
-    private lateinit var searchHistory: SearchHistory
-
     private var searchQuery: String = ""
     private var lastFailedQuery: String? = null
-    interface OnTrackClickListener {
-        fun onTrackClick(track: Track)
+    private val searchHandler = Handler(Looper.getMainLooper())
+    private val clickHandler = Handler(Looper.getMainLooper())
+    private var isClickAllowed = true
+
+    private val searchRunnable = Runnable {
+        doSearch(searchQuery)
+    }
+
+    private fun debounceSearch() {
+        searchHandler.removeCallbacks(searchRunnable)
+        searchHandler.postDelayed(searchRunnable, 2000)
+    }
+
+    private fun debounceClick(action: () -> Unit) {
+        if (isClickAllowed) {
+            isClickAllowed = false
+            clickHandler.postDelayed({ isClickAllowed = true }, 1000)
+            action()
+        }
     }
 
     private fun openPlayer(track: Track) {
-        val intent = Intent(this, PlayerActivity::class.java).apply {
-            putExtra(ADD_TRACK_KEY, Gson().toJson(track))
+        debounceClick {
+            val intent = Intent(this, PlayerActivity::class.java).apply {
+                putExtra(ADD_TRACK_KEY, Gson().toJson(track))
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-
         val sharedPreferences: SharedPreferences = getSharedPreferences("search_prefs", MODE_PRIVATE)
-        var historyView = findViewById<LinearLayout>(R.id.search_history)
+        val historyView = findViewById<LinearLayout>(R.id.search_history)
         val returnButton = findViewById<MaterialToolbar>(R.id.searchToolbar)
+
         searchHistory = SearchHistory(sharedPreferences)
         clearButton = findViewById(R.id.search_close_button)
         inputEditText = findViewById(R.id.editTextFrame)
         recyclerView = findViewById(R.id.search_tracksRecycle)
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
-        recyclerView = findViewById(R.id.search_tracksRecycle)
+        progressBar = findViewById(R.id.progress_bar)
         trackAdapter = TrackAdapter(tracksList) { track ->
             searchHistory.addSong(track)
-            tracksList.addAll(searchHistory.getSearchHistory())
+            historyList.clear()
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
             openPlayer(track)
         }
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = trackAdapter
         historyRecyclerView = findViewById(R.id.history_tracksRecycle)
@@ -82,6 +106,7 @@ class SearchActivity : AppCompatActivity() {
             openPlayer(track)
         }
 
+        historyRecyclerView.layoutManager = LinearLayoutManager(this)
         historyRecyclerView.adapter = historyAdapter
         returnButton.setOnClickListener {
             finish()
@@ -103,9 +128,9 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchQuery = s.toString()
-                clearButton.visibility = if (s.isNullOrEmpty())  View.GONE  else View.VISIBLE
-                historyView.visibility = if (s.isNullOrEmpty() != true )  View.GONE  else View.VISIBLE
-
+                debounceSearch()
+                clearButton.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                historyView.visibility = if (s.isNullOrEmpty()) View.VISIBLE else View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -130,7 +155,6 @@ class SearchActivity : AppCompatActivity() {
             tracksList.clear()
             trackAdapter.notifyDataSetChanged()
             historyAdapter.notifyDataSetChanged()
-
             displaySearchHistory()
         }
 
@@ -164,10 +188,12 @@ class SearchActivity : AppCompatActivity() {
 
     private fun doSearch(userInput: String) {
         if (userInput.isNotEmpty()) {
+            progressBar.visibility = View.VISIBLE
             lastFailedQuery = userInput
             RetrofitClient.iTunesService.search(userInput)
                 .enqueue(object : Callback<SearchResult> {
                     override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
+                        progressBar.visibility = View.GONE
                         if (response.isSuccessful) {
                             tracksList.clear()
                             response.body()?.results?.let { results ->
@@ -186,6 +212,7 @@ class SearchActivity : AppCompatActivity() {
                         }
                     }
                     override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+                        progressBar.visibility = View.GONE
                         showNetworkError()
                     }
                 })
@@ -222,6 +249,6 @@ class SearchActivity : AppCompatActivity() {
     private fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(inputEditText.windowToken, 0)
+
     }
 }
-
