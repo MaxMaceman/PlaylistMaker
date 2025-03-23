@@ -1,10 +1,14 @@
 package com.example.playlistmaker
 
-import android.os.Build
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.os.Handler
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ImageButton
+import android.media.MediaPlayer
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +20,18 @@ import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+private var mediaPlayer = MediaPlayer()
+private lateinit var playButton: ImageView
+private lateinit var handler: Handler
+private lateinit var timeScore: TextView
+private lateinit var  setTimeScore: Runnable
+
 class PlayerActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
+        playButton = findViewById(R.id.play_button)
         findViewById<androidx.appcompat.widget.Toolbar>(R.id.player_toolbar).apply {
             setNavigationOnClickListener { finish() }
         }
@@ -58,5 +69,77 @@ class PlayerActivity : AppCompatActivity() {
             .transform(CenterCrop(), RoundedCorners(2))
             .placeholder(R.drawable.album_placeholder)
             .into(albumCover)
+            preparePlayer(track)
+
+        playButton.setOnClickListener{
+            when (playerState) {
+                STATE_PLAYING -> pause()
+                STATE_PREPARED,
+                STATE_PAUSED -> play()
+            }
+        }
+
+        timeScore = findViewById<TextView>(R.id.score_bar)
+        handler = Handler(Looper.getMainLooper())
+        setTimeScore = Runnable { timeScore() }
+
     }
+
+    private fun preparePlayer(track: Track){
+        mediaPlayer = MediaPlayer()
+        mediaPlayer.reset()
+        mediaPlayer.setDataSource(track.previewUrl)
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnPreparedListener {
+            playButton.isEnabled = true
+            playerState = STATE_PREPARED
+        }
+        mediaPlayer.setOnCompletionListener {
+
+            playerState = STATE_PREPARED
+            handler.removeCallbacks(setTimeScore)
+            playButton.setImageResource(R.drawable.play_btn_light)
+            timeScore.text = "00:00"
+        }
+    }
+
+    private fun play(){
+        mediaPlayer.start()
+        playerState = STATE_PLAYING
+        playButton.setImageResource(R.drawable.pause)
+        handler.post(setTimeScore)
+    }
+
+    private fun pause(){
+        mediaPlayer.pause()
+        playerState = STATE_PAUSED
+        playButton.setImageResource((R.drawable.play_btn_light))
+        handler.removeCallbacks(setTimeScore)
+    }
+
+    private fun timeScore(){
+        val time = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition)
+        timeScore.text = time
+        handler.postDelayed(setTimeScore,500L)
+    }
+
+    override fun onPause(){
+        super.onPause()
+        pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.release()
+        handler.removeCallbacks(setTimeScore)
+    }
+
+    companion object {
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+    }
+    private var playerState = STATE_DEFAULT
 }
+

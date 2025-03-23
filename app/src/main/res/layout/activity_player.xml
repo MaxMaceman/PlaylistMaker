@@ -94,8 +94,8 @@
 
 
             <ImageView
-                style="@style/PlaylistPlayBtn"
                 android:id="@+id/play_button"
+                style="@style/PlaylistPlayBtn"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="30dp"
@@ -125,7 +125,7 @@
                 />
 
             <TextView
-                android:id="@+id/progress_bar"
+                android:id="@+id/score_bar"
                 style="@style/PlaylistArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                 android:layout_marginTop="30dp"
                 android:text="@string/duration"
                 app:layout_constraintStart_toStartOf="@id/left_border_16"
-                app:layout_constraintTop_toBottomOf="@id/progress_bar"
+                app:layout_constraintTop_toBottomOf="@id/score_bar"
                 />
 
             <TextView
