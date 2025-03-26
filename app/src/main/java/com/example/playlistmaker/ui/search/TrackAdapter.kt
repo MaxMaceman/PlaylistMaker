@@ -1,12 +1,9 @@
-package com.practicum.playlistmaker
+package com.example.playlistmaker.ui.search
 
 import android.annotation.SuppressLint
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.R
-import com.example.playlistmaker.Track
-import com.example.playlistmaker.TrackViewHolder
+import com.example.playlistmaker.domain.models.Track
 
 class TrackAdapter(
     private var trackListResult: MutableList<Track>,
