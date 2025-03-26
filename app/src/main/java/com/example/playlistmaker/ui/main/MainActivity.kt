@@ -1,13 +1,14 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.android.material.button.MaterialButton
+import com.example.playlistmaker.R
+import com.example.playlistmaker.ui.search.SearchActivity
+import com.example.playlistmaker.ui.settings.SettingsActivity
+import com.example.playlistmaker.ui.media.MediaActivity
 
 const val APP_PREFERENCES = "app_pref"
 const val IS_DARK = "is_dark_enabled"

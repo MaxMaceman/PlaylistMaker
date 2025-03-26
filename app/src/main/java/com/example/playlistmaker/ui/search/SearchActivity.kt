@@ -1,5 +1,6 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.ui.search
 
+import android.app.appsearch.SearchResult
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,13 +18,23 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.ADD_TRACK_KEY
+import com.example.playlistmaker.Creator
+import com.example.playlistmaker.R
+import com.example.playlistmaker.data.network.RetrofitClient
+import com.example.playlistmaker.data.HistoryRepositoryImpl
+import com.example.playlistmaker.domain.api.HistoryInteractor
+import com.example.playlistmaker.domain.impl.HistoryInteractorImpl
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.ui.player.PlayerActivity
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
-import com.practicum.playlistmaker.TrackAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
 
@@ -33,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var historyRecyclerView: RecyclerView
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
-    private lateinit var searchHistory: SearchHistory
+    private lateinit var searchHistory: HistoryInteractor
     private lateinit var progressBar: ProgressBar
 
     private val tracksList = mutableListOf<Track>()
@@ -44,9 +55,17 @@ class SearchActivity : AppCompatActivity() {
     private val clickHandler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
 
+    private var userInput: String = ""
+    private var cursorPosition: Int = 0
+
     private val searchRunnable = Runnable {
-        doSearch(searchQuery)
+        if (userInput.isNotEmpty()) {
+            doSearch(userInput)
+        }
     }
+
+    private val tracksInteractor = Creator.trackInteractorDo()
+    private val searchHistoryInteractor = Creator.historyInteractorDo()
 
     private fun debounceSearch() {
         searchHandler.removeCallbacks(searchRunnable)
@@ -74,11 +93,10 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val sharedPreferences: SharedPreferences = getSharedPreferences("search_prefs", MODE_PRIVATE)
         val historyView = findViewById<LinearLayout>(R.id.search_history)
         val returnButton = findViewById<MaterialToolbar>(R.id.searchToolbar)
 
-        searchHistory = SearchHistory(sharedPreferences)
+        searchHistory = Creator.historyInteractorDo()
         clearButton = findViewById(R.id.search_close_button)
         inputEditText = findViewById(R.id.editTextFrame)
         recyclerView = findViewById(R.id.search_tracksRecycle)
